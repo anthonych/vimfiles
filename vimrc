@@ -90,7 +90,7 @@ if has("gui_running")               " GUI color and font settings
     " Font settings {
         if has("gui_win32") || has("gui_win32s")
             set guifont=Consolas:h12
-        elseif os == 'Linux'
+        elseif has('unix')
             set guifont=Ubuntu\ Mono\ 13
         endif
     "}
