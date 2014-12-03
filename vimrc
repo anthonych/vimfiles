@@ -1,6 +1,6 @@
 " Author: Anthony Chen
 " Date: 2013/10/30
-" Version: 1.1 2014/11/28
+" Version: 1.2 2014/12/03
 
 "--------------------------------------------------------------
 " ### Runtime settings ###
@@ -10,15 +10,20 @@ if has('win32') || has('win64')
   set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
 endif
 
-" Install Vundle automatically
+" Install vundle plugin automatically
 let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+let vundle_readme=expand('$HOME/.vim/bundle/vundle/README.md')
 if !filereadable(vundle_readme)
-  echo "Installing Vundle.."
-  echo ""
-  silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-  let iCanHazVundle=0
+    echo "Installing Vundle.."
+    echo ""
+    if has('win32') || has('win64')
+        silent !mkdir -p \%HOMEPATH\%/.vim/bundle
+        silent !git clone https://github.com/gmarik/vundle \%HOMEPATH\%/.vim/bundle/vundle
+    else
+        silent !mkdir -p $HOME/.vim/bundle
+        silent !git clone https://github.com/gmarik/vundle $HOME/.vim/bundle/vundle
+    endif
+    let iCanHazVundle=0
 endif
 
 "--------------------------------------------------------------
@@ -28,7 +33,7 @@ set nocompatible " be iMproved
 filetype off " required!
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle
+set rtp+=$HOME/.vim/bundle/vundle
 call vundle#begin()
 
 " bundles
@@ -64,7 +69,7 @@ set lines=40 columns=120            " Initial window size
 " ### Appearance ###
 "--------------------------------------------------------------
 set cmdheight=1                     " Set command line height
-set showmode                        " Show current mode  
+set showmode                        " Show current mode
 set showcmd
 set cursorline                      " Highlight current line
 set laststatus=2                    " Display status line always
@@ -73,7 +78,6 @@ if has("gui_running")               " GUI color and font settings
     set guioptions-=T               " Remove toolbar
     set guioptions-=r               " Remove right-hand scroll bar
     set guitablabel=\[%N\]\ %t\ %M  " Setup tab title
-    set guifont=Ubuntu\ Mono\ 13    " Editor font setting
     set background=dark             " Backgroud style
     colorscheme atom-dark           " Color scheme
 
@@ -83,16 +87,17 @@ if has("gui_running")               " GUI color and font settings
         vmap <C-C> "+y
     "}
 
-    " Windows GUI settings {
+    " Font settings {
         if has("gui_win32") || has("gui_win32s")
             set guifont=Consolas:h12
+        elseif os == 'Linux'
+            set guifont=Ubuntu\ Mono\ 13
         endif
     "}
 else
     " terminal color settings
     set t_Co=256          " Use 256 colors
     set background=dark
-    colorscheme atom-dark
     set mouse=a
     set ttymouse=xterm2
 endif
@@ -101,7 +106,7 @@ endif
 " ### Editing ###
 "--------------------------------------------------------------
 syntax on
-filetype on               " Filetype detection  
+filetype on               " Filetype detection
 filetype plugin on        " Filetype plugin
 set nobackup              " No backup
 set noswapfile            " No swap file
@@ -123,16 +128,16 @@ set hidden                " Hide buffers instead of closing them
 "}
 
 " Search settings {
-    set nohlsearch        " No highlight search 
+    set nohlsearch        " No highlight search
     set incsearch         " Incremental search
     set ignorecase        " Ignore case when searching
     set smartcase         " Use case-smart searching
 "}
 
-    
+
 " Code folding {}
     set foldmethod=syntax " Folding methods - manual/indent/syntax/expr/marker/diff
-    set foldlevel=1000    " Default foldinf level  
+    set foldlevel=1000    " Default foldinf level
     set foldnestmax=2     " Deepest folding nest level
     set foldcolumn=3      " Sets the width for a column on left side to indicate folds
 "}
@@ -180,9 +185,9 @@ let g:airline_theme='wombat'
     let NERDTreeQuitOnOpen=1            " Quit on opening files from the tree
     let NERDTreeHighlightCursorline=1   " Highlight the selected entry in the tree
     let NERDTreeMinimalUI = 0           " User minimal UI display
-     
+
     " Single click to fold/unfold folders and double click to open files
-    let NERDTreeMouseMode=2             
+    let NERDTreeMouseMode=2
 
     " Don't display these files
     let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
@@ -191,7 +196,7 @@ let g:airline_theme='wombat'
 
     " Bookmark file location
     let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
-    
+
     " Close vim if the only window left open is a NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 "}
