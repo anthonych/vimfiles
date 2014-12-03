@@ -5,8 +5,20 @@
 "--------------------------------------------------------------
 " ### Runtime settings ###
 "--------------------------------------------------------------
+" Setup runtimepath for Windows
 if has('win32') || has('win64')
   set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+endif
+
+" Install Vundle automatically
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+  echo "Installing Vundle.."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  let iCanHazVundle=0
 endif
 
 "--------------------------------------------------------------
