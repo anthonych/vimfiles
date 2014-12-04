@@ -1,6 +1,6 @@
-" Author: Anthony Chen
-" Date: 2013/10/30
-" Version: 1.2 2014/12/03
+" Author: Anthony Chen <anthonychen@gmail.com>
+" Initial Date: 2013/10/30
+" Last Update: 1.2 2014/12/03
 
 "--------------------------------------------------------------
 " ### Runtime settings ###
@@ -62,8 +62,8 @@ filetype on
 "--------------------------------------------------------------
 set nocompatible                    " Do not compatible with old vi mode
 set backspace=indent,eol,start      " Allow backspacing over everything in insert mode
-set history=1000                     " Command line history to remember
-set lines=40 columns=120            " Initial window size
+set history=1000                    " Command line history to remember
+set lines=30 columns=120            " Initial window size
 
 "--------------------------------------------------------------
 " ### Appearance ###
@@ -74,7 +74,8 @@ set showcmd
 set cursorline                      " Highlight current line
 set laststatus=2                    " Display status line always
 
-if has("gui_running")               " GUI color and font settings
+" GUI settings
+if has("gui_running")
     set guioptions-=T               " Remove toolbar
     set guioptions-=r               " Remove right-hand scroll bar
     set guitablabel=\[%N\]\ %t\ %M  " Setup tab title
@@ -87,15 +88,17 @@ if has("gui_running")               " GUI color and font settings
         vmap <C-C> "+y
     "}
 
-    " Font settings {
+    " Platform specific gui settings {
         if has("gui_win32") || has("gui_win32s")
-            set guifont=Consolas:h12
+            set lines=30 columns=110            " Initial window size
+            set guifont=Consolas:h12            " Windows font setting
         elseif has('unix')
-            set guifont=Ubuntu\ Mono\ 13
+            set lines=40 columns=120            " Initial window size
+            set guifont=Ubuntu\ Mono\ 13        " Unix/Linux font setting
         endif
     "}
 else
-    " terminal color settings
+    " Terminal console settings
     set t_Co=256          " Use 256 colors
     set background=dark
     set mouse=a
@@ -103,7 +106,7 @@ else
 endif
 
 "--------------------------------------------------------------
-" ### Editing ###
+" ### Edit ###
 "--------------------------------------------------------------
 syntax on
 filetype on               " Filetype detection
@@ -168,12 +171,10 @@ set termencoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
 
-"--------------------------------------------------------------
-"  ### Miscellaneous ###
-"--------------------------------------------------------------
 
-" Reload vimrc file automatically
-autocmd! BufWritePost .vimrc,_vimrc,vimrc source $MYVIMRC
+"--------------------------------------------------------------
+"  ### Plugin Settings ###
+"--------------------------------------------------------------
 
 " vim-airline settings
 let g:airline_theme='wombat'
@@ -200,3 +201,11 @@ let g:airline_theme='wombat'
     " Close vim if the only window left open is a NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 "}
+
+"--------------------------------------------------------------
+"  ### Miscellaneous ###
+"--------------------------------------------------------------
+
+" Reload vimrc file automatically
+autocmd! BufWritePost .vimrc,_vimrc,vimrc source $MYVIMRC
+
