@@ -47,7 +47,6 @@ Bundle 'gmarik/vundle'
 "}
 
 Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'AutoComplPop'
 Bundle 'bling/vim-airline'
 Bundle 'godlygeek/csapprox'
@@ -72,7 +71,7 @@ set novisualbell                    " Disable visual error effect
 "--------------------------------------------------------------
 " ### Appearance ###
 "--------------------------------------------------------------
-set cmdheight=2                     " Set command line height
+set cmdheight=1                     " Set command line height
 set showmode                        " Show current mode
 set showcmd                         " Show command line
 set cursorline                      " Highlight current line
@@ -153,17 +152,21 @@ set hidden                " Hide buffers instead of closing them
 
 " Copy&Paste {
     " Copy and go to insert mode immediately
-    vmap <C-c> "+yi                   
-    " Cut in visual mode          
-    vmap <C-x> "+c          
+    vmap <C-c> "+yi
+    " Cut in visual mode
+    vmap <C-x> "+c
     " Paste in visual mode
-    vmap <C-v> c<ESC>"+p    
+    vmap <C-v> c<ESC>"+p
     " Paste in visual mode
     imap <C-v> <C-r><C-o>+
 "}
 
-" Set Ctrl+E as NERDTree hot key 
-map <silent> <C-E> :NERDTreeFocusToggle<CR>
+" Set Ctrl+E as NERDTree hot key
+if has("gui_win32") || has("gui_win32s")
+    map <silent> <C-E> :NERDTreeToggle D:\Projects\<CR>
+elseif has('unix')
+    map <silent> <C-E> :NERDTreeToggle $HOME/Projects<CR>
+endif
 
 "--------------------------------------------------------------
 " ### Encoding ###
@@ -211,7 +214,7 @@ let g:airline_theme='wombat'
 autocmd! BufWritePost .vimrc,_vimrc,vimrc source $MYVIMRC
 
 " Change working directory to current folder
-set autochdir                   
+set autochdir
 
 "--------------------------------------------------------------
 "  ### Customized Functions ###
