@@ -47,12 +47,14 @@ Bundle 'gmarik/vundle'
 "}
 
 Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'AutoComplPop'
 Bundle 'bling/vim-airline'
-"Bundle 'supertab'
 Bundle 'godlygeek/csapprox'
 Bundle 'ctrlp.vim'
 Bundle 'auto-pairs'
+Bundle 'ap/vim-css-color'
+Bundle 'tpope/vim-fugitive'
 
 call vundle#end()
 filetype on
@@ -63,14 +65,16 @@ filetype on
 set nocompatible                    " Do not compatible with old vi mode
 set backspace=indent,eol,start      " Allow backspacing over everything in insert mode
 set history=1000                    " Command line history to remember
-set lines=30 columns=120            " Initial window size
+set lines=40 columns=120            " Default initial window size
+set noerrorbells                    " Disable error sound
+set novisualbell                    " Disable visual error effect
 
 "--------------------------------------------------------------
 " ### Appearance ###
 "--------------------------------------------------------------
-set cmdheight=1                     " Set command line height
+set cmdheight=2                     " Set command line height
 set showmode                        " Show current mode
-set showcmd
+set showcmd                         " Show command line
 set cursorline                      " Highlight current line
 set laststatus=2                    " Display status line always
 
@@ -81,12 +85,6 @@ if has("gui_running")
     set guitablabel=\[%N\]\ %t\ %M  " Setup tab title
     set background=dark             " Backgroud style
     colorscheme atom-dark           " Color scheme
-
-    " Copy&Paste {
-        nmap <C-V> "+gP
-        imap <C-V> <ESC>"+gpa
-        vmap <C-C> "+y
-    "}
 
     " Platform specific gui settings {
         if has("gui_win32") || has("gui_win32s")
@@ -101,6 +99,7 @@ else
     " Terminal console settings
     set t_Co=256          " Use 256 colors
     set background=dark
+    colorscheme atom-dark           " Color scheme
     set mouse=a
     set ttymouse=xterm2
 endif
@@ -133,10 +132,8 @@ set hidden                " Hide buffers instead of closing them
 " Search settings {
     set nohlsearch        " No highlight search
     set incsearch         " Incremental search
-    set ignorecase        " Ignore case when searching
     set smartcase         " Use case-smart searching
 "}
-
 
 " Code folding {}
     set foldmethod=syntax " Folding methods - manual/indent/syntax/expr/marker/diff
@@ -155,13 +152,18 @@ set hidden                " Hide buffers instead of closing them
 "}
 
 " Copy&Paste {
-    nmap <C-V> "+gP
-    imap <C-V> <ESC>"+gpa
-    vmap <C-C> "+y
+    " Copy and go to insert mode immediately
+    vmap <C-c> "+yi                   
+    " Cut in visual mode          
+    vmap <C-x> "+c          
+    " Paste in visual mode
+    vmap <C-v> c<ESC>"+p    
+    " Paste in visual mode
+    imap <C-v> <C-r><C-o>+
 "}
 
-" Set F2 as NERDTree hot key
-nnoremap <silent> <F2> :NERDTree<CR>
+" Set Ctrl+E as NERDTree hot key 
+map <silent> <C-E> :NERDTreeFocusToggle<CR>
 
 "--------------------------------------------------------------
 " ### Encoding ###
@@ -170,7 +172,6 @@ set encoding=utf-8
 set termencoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
-
 
 "--------------------------------------------------------------
 "  ### Plugin Settings ###
@@ -208,4 +209,32 @@ let g:airline_theme='wombat'
 
 " Reload vimrc file automatically
 autocmd! BufWritePost .vimrc,_vimrc,vimrc source $MYVIMRC
+
+" Change working directory to current folder
+set autochdir                   
+
+"--------------------------------------------------------------
+"  ### Customized Functions ###
+"--------------------------------------------------------------
+
+" Toggle netrw explorer
+function! ToggleVExplorer()
+    if exists("t:expl_buf_num")
+        let expl_win_num = bufwinnr(t:expl_buf_num)
+        if expl_win_num != -1
+            let cur_win_nr = winnr()
+            exec expl_win_num . 'wincmd w'
+            close
+            exec cur_win_nr . 'wincmd w'
+            unlet t:expl_buf_num
+        else
+            unlet t:expl_buf_num
+        endif
+    else
+        exec '1wincmd w'
+        Vexplore
+        let t:expl_buf_num = bufnr("%")
+    endif
+endfunction
+
 
