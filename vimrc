@@ -36,24 +36,34 @@ filetype off " required!
 set rtp+=$HOME/.vim/bundle/vundle
 call vundle#begin()
 
-" bundles
+" Manage vundle by vundle
 Bundle 'gmarik/vundle'
 
 " Snipmate budles {
     Bundle "MarcWeber/vim-addon-mw-utils"
     Bundle "tomtom/tlib_vim"
-    Bundle "garbas/vim-snipmate"
+    Bundle "garbas/vim-snipmate"            
     Bundle 'honza/vim-snippets'
 "}
 
-Bundle 'scrooloose/nerdtree'
-Bundle 'AutoComplPop'
-Bundle 'bling/vim-airline'
-Bundle 'godlygeek/csapprox'
-Bundle 'ctrlp.vim'
-Bundle 'auto-pairs'
-Bundle 'ap/vim-css-color'
-Bundle 'tpope/vim-fugitive'
+" NERDTree, a tree explorer plugin for vim.
+Bundle 'scrooloose/nerdtree'            
+" Automatically opens popup menu for completions.
+Bundle 'AutoComplPop'                   
+" Lean & mean status/tabline for vim.
+Bundle 'bling/vim-airline'              
+" Make gvim-only colorschemes work transparently in terminal vim.
+Bundle 'godlygeek/csapprox'            
+" Fuzzy file, buffer, mru, tag, etc finder.
+Bundle 'ctrlp.vim'                      
+" Insert or delete brackets, parens, quotes in pair.
+Bundle 'auto-pairs'                     
+" Highlight colors in css files.
+Bundle 'ap/vim-css-color'               
+" A Git wrapper
+Bundle 'tpope/vim-fugitive'   
+" A autocompletion plugin for Python
+Bundle 'davidhalter/jedi-vim'
 
 call vundle#end()
 filetype on
@@ -61,29 +71,29 @@ filetype on
 "--------------------------------------------------------------
 " ### General ###
 "--------------------------------------------------------------
-set nocompatible                    " Do not compatible with old vi mode
-set backspace=indent,eol,start      " Allow backspacing over everything in insert mode
-set history=1000                    " Command line history to remember
-set lines=40 columns=120            " Default initial window size
-set noerrorbells                    " Disable error sound
-set novisualbell                    " Disable visual error effect
+set nocompatible                        " Do not compatible with old vi mode
+set backspace=indent,eol,start          " Allow backspacing over everything in insert mode
+set history=1000                        " Command line history to remember
+set lines=40 columns=120                " Default initial window size
+set noerrorbells                        " Disable error sound
+set novisualbell                        " Disable visual error effect
 
 "--------------------------------------------------------------
 " ### Appearance ###
 "--------------------------------------------------------------
-set cmdheight=1                     " Set command line height
-set showmode                        " Show current mode
-set showcmd                         " Show command line
-set cursorline                      " Highlight current line
-set laststatus=2                    " Display status line always
+set cmdheight=1                         " Set command line height
+set showmode                            " Show current mode
+set showcmd                             " Show command line
+set cursorline                          " Highlight current line
+set laststatus=2                        " Display status line always
 
 " GUI settings
 if has("gui_running")
-    set guioptions-=T               " Remove toolbar
-    set guioptions-=r               " Remove right-hand scroll bar
-    set guitablabel=\[%N\]\ %t\ %M  " Setup tab title
-    set background=dark             " Backgroud style
-    colorscheme atom-dark           " Color scheme
+    set guioptions-=T                   " Remove toolbar
+    set guioptions-=r                   " Remove right-hand scroll bar
+    set guitablabel=\[%N\]\ %t\ %M      " Setup tab title
+    set background=dark                 " Backgroud style
+    colorscheme atom-dark               " Color scheme
 
     " Platform specific gui settings {
         if has("gui_win32") || has("gui_win32s")
@@ -91,7 +101,7 @@ if has("gui_running")
             set guifont=Consolas:h12            " Windows font setting
         elseif has('unix')
             set lines=40 columns=120            " Initial window size
-            set guifont=Ubuntu\ Mono\ 13        " Unix/Linux font setting
+            set guifont=Ubuntu\ Mono\ 13        " Linux font setting
         endif
     "}
 else
@@ -134,20 +144,31 @@ set hidden                " Hide buffers instead of closing them
     set smartcase         " Use case-smart searching
 "}
 
-" Code folding {}
+" Code folding {
     set foldmethod=syntax " Folding methods - manual/indent/syntax/expr/marker/diff
     set foldlevel=1000    " Default foldinf level
     set foldnestmax=2     " Deepest folding nest level
     set foldcolumn=3      " Sets the width for a column on left side to indicate folds
 "}
 
+" Word wrap {
+    set wrap              " Visual word wrap
+    set linebreak         " Wrap long lines at a character in 'breakat' 
+" }
+
 "--------------------------------------------------------------
-" ### keymap ###
+" ### Keymap ###
 "--------------------------------------------------------------
 
-" New/Close tab {
-    map <C-t><C-t> :tabnew<CR>
-    map <C-t><C-w> :tabclose<CR>
+" Tab {
+    " Open tab
+    map <C-t><C-t> :tabnew<CR>  
+    " Close tab
+    map <C-w><C-w> :tabclose<CR>
+    " Next tab 
+    map <C-l> :tabn<CR>
+    " Previous tab
+    map <C-h> :tabp<CR>
 "}
 
 " Copy&Paste {
@@ -159,6 +180,9 @@ set hidden                " Hide buffers instead of closing them
     vmap <C-v> c<ESC>"+p
     " Paste in visual mode
     imap <C-v> <C-r><C-o>+
+"}
+
+" Compile & Run {
 "}
 
 " Set Ctrl+E as NERDTree hot key
