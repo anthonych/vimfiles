@@ -49,7 +49,7 @@ Bundle 'gmarik/vundle'
 " NERDTree, a tree explorer plugin for vim.
 Bundle 'scrooloose/nerdtree'            
 " Automatically opens popup menu for completions.
-Bundle 'AutoComplPop'                   
+" Bundle 'AutoComplPop'                   
 " Lean & mean status/tabline for vim.
 Bundle 'bling/vim-airline'              
 " Make gvim-only colorschemes work transparently in terminal vim.
@@ -63,7 +63,10 @@ Bundle 'ap/vim-css-color'
 " A Git wrapper
 Bundle 'tpope/vim-fugitive'   
 " A autocompletion plugin for Python
-Bundle 'davidhalter/jedi-vim'
+" Bundle 'davidhalter/jedi-vim'
+" A code-completion engine for Vim
+Bundle 'Valloric/YouCompleteMe'
+
 
 call vundle#end()
 filetype on
@@ -156,6 +159,10 @@ set hidden                " Hide buffers instead of closing them
     set linebreak         " Wrap long lines at a character in 'breakat' 
 " }
 
+" Omni completion {
+    set completeopt=longest,menu    " Not to select the first item
+" }
+
 "--------------------------------------------------------------
 " ### Keymap ###
 "--------------------------------------------------------------
@@ -201,7 +208,7 @@ set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
 
 "--------------------------------------------------------------
-"  ### Plugin Settings ###
+" ### Plugin Settings ###
 "--------------------------------------------------------------
 
 " vim-airline settings
@@ -213,7 +220,7 @@ let g:airline_theme='wombat'
     let NERDTreeShowBookmarks=1         " Show bookmarks by default
     let NERDTreeQuitOnOpen=1            " Quit on opening files from the tree
     let NERDTreeHighlightCursorline=1   " Highlight the selected entry in the tree
-    let NERDTreeMinimalUI = 0           " User minimal UI display
+    let NERDTreeMinimalUI=0           " User minimal UI display
 
     " Single click to fold/unfold folders and double click to open files
     let NERDTreeMouseMode=2
@@ -228,6 +235,15 @@ let g:airline_theme='wombat'
 
     " Close vim if the only window left open is a NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"}
+
+" YouCompleteMe settings {
+    " Set the path of ycm_extra_config.py 
+    let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm'
+    " Enable auto complete in comments
+    let g:ycm_complete_in_comments = 1
+    " 
+    let g:ycm_key_list_select_completion = ['<TAB>', '<Down>','<Enter>']
 "}
 
 "--------------------------------------------------------------
