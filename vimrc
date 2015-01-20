@@ -1,6 +1,6 @@
 " Author: Anthony Chen <anthonychen@gmail.com>
 " Initial Date: 2013/10/30
-" Last Update: 1.2 2014/12/03
+" Last Update: 1.3 2015/01/20 fix scrollbar problem of Linux gui
 
 "--------------------------------------------------------------
 " ### Runtime settings ###
@@ -94,6 +94,12 @@ set laststatus=2                        " Display status line always
 if has("gui_running")
     set guioptions-=T                   " Remove toolbar
     set guioptions-=r                   " Remove right-hand scroll bar
+    set guioptions-=L                   " Remove left vertically split scrollbar
+    set guioptions-=l                   " Remove left scrollbar   
+    set guioptions-=R                   " Remove right scrollbar 
+    set guioptions-=r                   " Remove right vertically split scrollbar   
+    set guioptions-=b                   " Remove buttom scrollbar 
+    set guioptions-=h                   " Limit horizontal scrollbar size  
     set guitablabel=\[%N\]\ %t\ %M      " Setup tab title
     set background=dark                 " Backgroud style
     colorscheme atom-dark               " Color scheme
