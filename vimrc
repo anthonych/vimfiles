@@ -47,7 +47,7 @@ Bundle 'gmarik/vundle'
 "}
 
 " NERDTree, a tree explorer plugin for vim.
-Bundle 'scrooloose/nerdtree'            
+Bundle 'scrooloose/nerdtree'           
 " Automatically opens popup menu for completions.
 " Bundle 'AutoComplPop'                   
 " Lean & mean status/tabline for vim.
@@ -200,9 +200,9 @@ set hidden                " Hide buffers instead of closing them
 
 " Set Ctrl+E as NERDTree hot key
 if has("gui_win32") || has("gui_win32s")
-    map <silent> <C-E> :NERDTreeToggle D:\Projects\<CR>
+    noremap <silent> <C-E> :NERDTreeToggle D:\Projects\<CR>
 elseif has('unix')
-    map <silent> <C-E> :NERDTreeToggle $HOME/Projects<CR>
+    noremap <silent> <C-E> :NERDTreeToggle $HOME/Projects<CR>
 endif
 
 "--------------------------------------------------------------
@@ -226,7 +226,7 @@ let g:airline_theme='wombat'
     let NERDTreeShowBookmarks=1         " Show bookmarks by default
     let NERDTreeQuitOnOpen=1            " Quit on opening files from the tree
     let NERDTreeHighlightCursorline=1   " Highlight the selected entry in the tree
-    let NERDTreeMinimalUI=0           " User minimal UI display
+    let NERDTreeMinimalUI=0             " Use minimal UI display
 
     " Single click to fold/unfold folders and double click to open files
     let NERDTreeMouseMode=2
