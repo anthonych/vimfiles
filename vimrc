@@ -89,17 +89,20 @@ set showmode                            " Show current mode
 set showcmd                             " Show command line
 set cursorline                          " Highlight current line
 set laststatus=2                        " Display status line always
+set guicursor+=n-c-v:blinkon0           " Change cursor style to blink
 
 " GUI settings
 if has("gui_running")
-    set guioptions-=T                   " Remove toolbar
-    set guioptions-=r                   " Remove right-hand scroll bar
-    set guioptions-=L                   " Remove left vertically split scrollbar
-    set guioptions-=l                   " Remove left scrollbar   
-    set guioptions-=R                   " Remove right scrollbar 
-    set guioptions-=r                   " Remove right vertically split scrollbar   
-    set guioptions-=b                   " Remove buttom scrollbar 
-    set guioptions-=h                   " Limit horizontal scrollbar size  
+    " Fix gui scrollbar problem on linux {
+        set guioptions-=T                   " Remove toolbar
+        set guioptions-=r                   " Remove right-hand scroll bar
+        set guioptions-=L                   " Remove left vertically split scrollbar
+        set guioptions-=l                   " Remove left scrollbar   
+        set guioptions-=R                   " Remove right scrollbar 
+        set guioptions-=r                   " Remove right vertically split scrollbar   
+        set guioptions-=b                   " Remove buttom scrollbar 
+        set guioptions-=h                   " Limit horizontal scrollbar size  
+    " }
     set guitablabel=\[%N\]\ %t\ %M      " Setup tab title
     set background=dark                 " Backgroud style
     colorscheme atom-dark               " Color scheme
@@ -196,6 +199,8 @@ set hidden                " Hide buffers instead of closing them
 "}
 
 " Compile & Run {
+    " Run Python
+    nnoremap <silent> <F6> :exec '!python' shellescape(@%, 1)<cr>
 "}
 
 " Set Ctrl+E as NERDTree hot key
